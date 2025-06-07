@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>欢迎使用Jupyter NoteBook</title>
+  <style>
+    :root {
+      --primary: #4e54c8;
+      --secondary: #8f94fb;
+      --dark: #1a1a2e;
+      --darker: #0d0d16;
+      --light: #f0f0f3;
+      --accent: #0ff;
+      --accent2: #f0f;
+      --glow: 0 0 15px rgba(0, 255, 255, 0.5);
+      --glow2: 0 0 20px rgba(255, 0, 255, 0.4);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      overflow: hidden;
+      position: relative;
+      padding: 20px;
+      color: var(--light);
+    }
+    
+    /* 科技感背景特效 */
+    .tech-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .grid-lines {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: 
+        linear-gradient(90deg, rgba(79, 228, 168, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(79, 228, 168, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      transform: translate(-25%, -25%) rotate(30deg);
+      animation: gridMove 120s linear infinite;
+    }
+    
+    @keyframes gridMove {
+      0% { transform: translate(-25%, -25%) rotate(30deg); }
+      100% { transform: translate(-75%, -75%) rotate(30deg); }
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-100vh) translateX(100px); }
+    }
+    
+    .login-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px 30px;
+      background: rgba(30, 30, 46, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 255, 255, 0.1),
+        inset 0 0 10px rgba(0, 255, 255, 0.1),
+        var(--glow),
+        var(--glow2);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      overflow: hidden;
+    }
+    
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        transparent,
+        rgba(0, 255, 255, 0.05),
+        rgba(255, 0, 255, 0.05),
+        transparent
+      );
+      transform: rotate(30deg);
+      z-index: -1;
+      animation: rotateLight 20s linear infinite;
+    }
+    
+    @keyframes rotateLight {
+      0% { transform: rotate(30deg); }
+      100% { transform: rotate(390deg); }
+    }
+    
+    .auth-form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .auth-form-header h1 {
+      color: var(--accent);
+      font-size: 32px;
+      margin-bottom: 10px;
+      text-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.7),
+        0 0 20px rgba(255, 0, 255, 0.5);
+      letter-spacing: 1px;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .auth-form-header p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      max-width: 80%;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .auth-form-body {
+      padding: 20px;
+      border-radius: 10px;
+      background: rgba(25, 25, 40, 0.5);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 255, 255, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 14px 20px;
+      background: rgba(40, 40, 60, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent2);
+      box-shadow: 
+        0 0 15px rgba(0, 255, 255, 0.4),
+        0 0 15px rgba(255, 0, 255, 0.4);
+      background: rgba(30, 30, 50, 0.5);
+    }
+    
+    .btn-login {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 
+        0 5px 15px rgba(143, 148, 251, 0.4),
+        var(--glow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 8px 20px rgba(143, 148, 251, 0.6),
+        0 0 25px rgba(0, 255, 255, 0.7);
+    }
+    
+    .btn-login:active {
+      transform: translateY(1px);
+    }
+    
+    .btn-login::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transform: rotate(30deg);
+      animation: btnLight 3s linear infinite;
+    }
+    
+    @keyframes btnLight {
+      0% { transform: rotate(30deg) translate(-20%, -20%); }
+      100% { transform: rotate(30deg) translate(80%, 80%); }
+    }
+    
+    .login_error, .error {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.2);
+    }
+    
+    .feedback-container {
+      position: relative;
+      margin-top: 20px;
+    }
+    
+    #login_submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 
+        0 5px 15px rgba(0, 114, 255, 0.4),
+        var(--glow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #login_submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 8px 20px rgba(0, 198, 255, 0.6),
+        0 0 25px rgba(0, 255, 255, 0.7);
+    }
+    
+    .feedback-widget {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      color: var(--accent);
+    }
+    
+    .footer {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 30px;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+    }
+    
+    /* 警告样式 */
+    #insecure-login-warning {
+      color: #ffcc00;
+      background: rgba(255, 204, 0, 0.1);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .login_terms {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(40, 40, 60, 0.3);
+      border-radius: 5px;
+      border: 1px solid rgba(0, 255, 255, 0.1);
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+      
+      .auth-form-header h1 {
+        font-size: 28px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .auth-form-header h1 {
+        font-size: 24px;
+      }
+      
+      .auth-form-body {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 科技感背景 -->
+  <div class="tech-bg">
+    <div class="grid-lines"></div>
+  </div>
+  
+  <div class="login-container">
+    <div class="auth-form-header">
+      <h1>欢迎使用Jupyter NoteBook AI学习工作平台</h1>
+      <p>科技赋能协作，探索数据宇宙的无限可能</p>
+    </div>
+    
+    {% block login_container %}
+      {% if custom_html %}
+        {{ custom_html | safe }}
+      {% elif login_service %}
+        <div class="service-login">
+       <!-- <p id='insecure-login-warning' class='hidden alert alert-warning'>
+            Warning: JupyterHub seems to be served over an unsecured HTTP connection.
+            We strongly recommend enabling HTTPS for JupyterHub.
+          </p>
+         -->
+          <a role="button"
+             class='btn btn-jupyter btn-lg'
+             href='{{ authenticator_login_url | safe }}'>Sign in with {{ login_service }}</a>
+        </div>
+      {% else %}
+        <form action="{{ authenticator_login_url | safe }}"
+              method="post"
+              role="form"
+              class="auth-form-body">
+      <!--     <p id='insecure-login-warning' class='hidden alert alert-warning'>
+            Warning: JupyterHub seems to be served over an unsecured HTTP connection.
+            We strongly recommend enabling HTTPS for JupyterHub.
+          </p>-->
+          {% if login_error %}<p class="login_error">{{ login_error }}</p>{% endif %}
+          <input type="hidden" name="_xsrf" value="{{ xsrf }}" />
+       
+          
+          <div class="form-group">
+            {% block username_input %}
+              <label for="username_input">用户名</label>
+              <input id="username_input"
+                     {% block username_input_attrs %}
+                     type="text"
+                     autocapitalize="off"
+                     autocorrect="off"
+                     autocomplete="username"
+                     class="form-control"
+                     name="username"
+                     value="{{ username }}"
+                     autofocus="autofocus"
+                     placeholder="请输入用户名"
+                     {% endblock username_input_attrs %} />
+            {% endblock username_input %}
+          </div>
+          
+          <div class="form-group">
+            {% block password_input %}
+              <label for='password_input'>密码</label>
+              <input id="password_input"
+                     {% block password_input_attrs %}
+                     type="password"
+                     class="form-control"
+                     autocomplete="current-password"
+                     name="password"
+                     placeholder="请输入密码"
+                     {% endblock password_input_attrs %} />
+            {% endblock password_input %}
+          </div>
+          
+          {% if authenticator.request_otp %}
+            <div class="form-group">
+              {% block otp_input %}
+                <label for="otp_input">{{ authenticator.otp_prompt }}</label>
+                <input id="otp_input"
+                       {% block otp_input_attrs %}
+                       class="form-control"
+                       autocomplete="one-time-password"
+                       name="otp"
+                       placeholder="请输入验证码"
+                       {% endblock otp_input_attrs %} />
+              {% endblock otp_input %}
+            </div>
+          {% endif %}
+          
+          <div class="feedback-container">
+            <input id="login_submit"
+                   type="submit"
+                   class='btn btn-jupyter form-control'
+                   value='登录系统'
+                   tabindex="3" />
+            <div class="feedback-widget hidden">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+          
+          {% block login_terms %}
+            {% if login_term_url %}
+              <div id="login_terms" class="login_terms">
+                <input type="checkbox"
+                       id="login_terms_checkbox"
+                       name="login_terms_checkbox"
+                       required />
+                {% block login_terms_text %}
+                  {# allow overriding the text #}
+                  登录即表示您同意<a href="{{ login_term_url }}">服务条款和隐私政策</a>
+                {% endblock login_terms_text %}
+              </div>
+            {% endif %}
+          {% endblock login_terms %}
+        </form>
+      {% endif %}
+    {% endblock login_container %}
+    
+    <div class="footer">
+      <p>JupyterHub &copy; 2025 | 科技驱动未来</p>
+      <p>系统版本: {{ jupyterhub_version }}</p>
+    </div>
+  </div>
+  
+  {% block script %}
+    <script>
+      // 创建动态粒子背景
+      document.addEventListener('DOMContentLoaded', function() {
+        const techBg = document.querySelector('.tech-bg');
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          // 随机属性
+          const size = Math.random() * 4 + 1;
+          const posX = Math.random() * 100;
+          const posY = Math.random() * 100;
+          const animationDuration = Math.random() * 20 + 10;
+          const hue = Math.floor(Math.random() * 60) + 160;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}%`;
+          particle.style.top = `${posY}%`;
+          particle.style.animationDuration = `${animationDuration}s`;
+          particle.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+          particle.style.boxShadow = `0 0 ${size*2}px hsl(${hue}, 100%, 50%)`;
+          
+          techBg.appendChild(particle);
+        }
+        
+       // 原有的安全警告检查
+         if (!window.isSecureContext) {
+           var warning = document.getElementById('insecure-login-warning');
+           if (warning) {
+             warning.className = warning.className.replace(/\bhidden\b/, '');
+           }
+         }
+       });
+      
+      // 保留原有的表单提交反馈
+      document.addEventListener('DOMContentLoaded', function() {
+        var forms = document.getElementsByTagName('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(e) {
+            var form = e.target;
+            var submitBtn = form.querySelector('.feedback-container>input');
+            var feedbackWidget = form.querySelector('.feedback-widget');
+            
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.value = '登录中...';
+            }
+            
+            if (feedbackWidget) {
+              feedbackWidget.classList.remove('hidden');
+              var spinner = feedbackWidget.querySelector('.fa');
+              if (spinner) {
+                spinner.classList.add('fa-pulse');
+              }
+            }
+          });
+        }
+      });
+    </script>
+  {% endblock script %}
+</body>
+</html>
